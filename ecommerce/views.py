@@ -5,7 +5,7 @@ from categories.models import Category
 
 def Home(request):
     context = {
-        'products':Product.get_all_products()
+        'products':Product.objects.all(),
     }
     return render(request, 'home.html', context)
 

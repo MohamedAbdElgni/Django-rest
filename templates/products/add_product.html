@@ -3,18 +3,11 @@
 {% block content %}
 <div class="row align-items-center justify-content-center position-relative">
     <h1 class="text-center">Add Product</h1>
-    <form method="post" enctype="multipart/form-data" class="w-50 p-5 shadow">
+    <form method="POST" class="col-12 col-md-6 form" enctype="multipart/form-data">
         {%csrf_token%}
          {{form}}
         <input type="submit" value="Add">
     </form>
-    {% if msg %}
-  <div class="alert alert-{{msg.type}} alert-dismissible fade show" role="alert">
-      
-      {{msg.txt}}
-      
-  </div>
-    {% endif %}
 </div>
     
 {% endblock content %}

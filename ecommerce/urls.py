@@ -29,5 +29,5 @@ urlpatterns = [
     path('login/', Login, name='Login'),
     path('register/', Register, name='Register'),
     path("Cats", include('categories.urls' ) , name='Cats'),
-    path("Prouducts", include('products.urls' ) , name='Prouducts'),
+    path("Prouducts/", include('products.urls' ) , name='Prouducts'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

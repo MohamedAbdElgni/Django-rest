@@ -1,82 +1,35 @@
-from django.shortcuts import render, reverse
-from django.http import HttpResponseRedirect
-from .forms import CategoryForm, UpdateCategory
-from .models import Category
+from .models import Category 
+from django.views.generic import ListView , CreateView, UpdateView, DeleteView
+from .forms import *
+from django.urls import reverse_lazy
+
+
+
 # Create your views here.
 
-
-
-def Cats (request):
-    context = {
-        'cats':Category.get_all_categories()
-    }
-    return render(request, 'categories/cats.html', context)
-
-def AddCat(request):
-    form = CategoryForm()
-    context={
-        'form':form,
-        "msg":{
-            "txt":"",
-            "type":""
-        }
-    }
-    if request.method == 'POST':
-        form = CategoryForm(request.POST, request.FILES)  
-        if form.is_valid():
-            cat = Category()
-            cat.name = form.cleaned_data['name']
-            cat.description = form.cleaned_data['description']
-            if 'img' in request.FILES:
-                cat.img = request.FILES['img']
-            cat.save()
-            context['msg']['txt'] = "Category added successfully"
-            context['msg']['type'] = "success"
-            return HttpResponseRedirect(reverse('Cats') ,context['msg'])
-        else:
-            print(form.errors)
-            context['form'] = form
-            context['msg']['txt'] = form.errors
-            context['msg']['type'] = "danger"
-    return render(request, 'categories/add_cat.html', context)
-
-
-
-
-def UpdateCat(response,id):
-    cat = Category.objects.get(id=id)
-    form = UpdateCategory()
-    form.fields['name'].initial = cat.name
-    form.fields['description'].initial = cat.description
-    form.fields['img'].initial = cat.img
-    context = {
-        'cat':cat,
-        'form':form,
-        "msg":{
-            "txt":"",
-            "type":""
-        }
-    }
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'categories/cats.html'
+    context_object_name = 'cats'
     
-    if response.method == 'POST':
-        form = UpdateCategory(response.POST, response.FILES)
-        if form.is_valid():
-            cat.name = form.cleaned_data['name']
-            cat.description = form.cleaned_data['description']
-            if 'img' in response.FILES:
-                cat.img = response.FILES['img']
-            cat.save()
-            context['msg']['txt'] = "Category updated successfully"
-            context['msg']['type'] = "success"
-            return HttpResponseRedirect(reverse('Cats') ,context['msg'])
-        else:
-            context['form'] = form
-            context['msg']['txt'] = form.errors
-            context['msg']['type'] = "danger"
-    return render(response, 'categories/update_cat.html', context)
 
+class AddCategory(CreateView):
+    model = Category
+    template_name = 'categories/add_cat.html'
+    Form_class = 'form'
+    fields = ['name', 'description', 'img']
+    success_url = reverse_lazy('Cats')
+    
 
-def DeleteCat(response, id):
-    cat = Category.objects.get(id=id)
-    cat.delete()
-    return HttpResponseRedirect(reverse('Cats'))
+class UpdateCategory(UpdateView):
+    model = Category
+    template_name = 'categories/update_cat.html'
+    Form_class = 'form'
+    fields = ['name', 'description', 'img']
+    success_url = reverse_lazy('Cats')
+    
+    
+class DeleteCategory(DeleteView):
+    model = Category
+    template_name = 'categories/delete_cat.html'
+    success_url = reverse_lazy('Cats')
