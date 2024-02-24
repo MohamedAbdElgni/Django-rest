@@ -12,3 +12,13 @@ def Home(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+def Login(request):
+    return render(request, 'login.html')
+
+def Register(request):
+    return render(request, 'register.html')
+
+def Logout(request):
+    pass
