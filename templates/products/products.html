@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+Categories
+{% endblock title %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="text-center ">Products</h1>
+    </div>
+    <div class="col-12 text-center">
+        <a href="{% url 'AddProduct' %}"
+        type="button" class="btn btn-outline-dark shadow">
+            Add New Product
+        </a>
+    </div>
+</div>
+
+
+
+
+<div class="row mt-2 p-2  text-light">
+    {%for product in products%}
+    <div class="col col-md-6 col-lg-4">
+        <div class="card shadow mb-3">
+            <div class="card-img  w-100" style = "height: 200px; overflow: hidden;">
+                <img src="{{product.get_img_url}}" class="w-100 h-100" alt="{{product.name}}">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title
+                ">{{product.name}}</h5>
+                <p class="card-text">{{product.description}}</p>
+                <p class="card-text">Price: {{product.price}}$</p>
+                <p class="card-text">Category: {{product.category}}</p>
+                <a href="{% url 'UpdateProduct' product.id %}" class="btn btn-outline-primary">Update</a>
+                <a href="{% url 'DeleteProduct' product.id %}" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+
+
+    {%endfor%}
+    
+</div>
+
+
+
+
+{% endblock content %}
