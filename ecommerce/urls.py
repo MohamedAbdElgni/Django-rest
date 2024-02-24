@@ -22,12 +22,18 @@ from .views import *
 from categories.views import *
 from products.views import *
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home, name='Home'),
-    path('about/', about, name='About'),
-    path('login/', Login, name='Login'),
-    path('register/', Register, name='Register'),
+    
+    # path('about/', about, name='About'),
+    # path('login/', Login, name='Login'),
+    #path('register/', Register, name='Register'),
     path("Cats", include('categories.urls' ) , name='Cats'),
     path("Prouducts/", include('products.urls' ) , name='Prouducts'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('login/', Login, name='Login'),
+    path('register/', Register, name='Register'),
+    path('logout/',Logout, name='Logout'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

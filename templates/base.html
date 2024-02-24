@@ -48,12 +48,20 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a href="{% url 'Login' %}" class="nav-link fs-5">Logsin</a>
+                        <a href=" {% url 'Logout' %}" class="nav-link fs-5">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href=" {% url 'Login' %}" class="nav-link fs-5">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'Register' %}" class="nav-link fs-5">Register</a>
+                        <a href=" {% url 'Register' %}" class="nav-link fs-5">Register</a>
                     </li>
+
+                    {% endif %}
+
                 </ul>
             </div>
         </div>
