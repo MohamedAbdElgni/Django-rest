@@ -46,6 +46,9 @@
                     <li class="nav-item">
                         <a href="{% url 'Prouducts' %}" class="nav-link">Products</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{% url 'About' %}" class="nav-link">About</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% if user.is_authenticated %}
@@ -66,8 +69,13 @@
             </div>
         </div>
     </nav>
+    {%if user.is_authenticated%}
     
-    <main class="container-fluid mt-3 mb-5">
+    <main class="container-fluid mt-3 mb-5 ">
+        <div class="row justify-content-center text-bg-warning p-0 m-0">
+        Welcome {{user.username}}
+    </div>
+        {%endif%}
         {% block content %} {% endblock content%}
         {%block sidebar %} {% endblock sidebar %}
         {%block js%} {%endblock js%}
@@ -78,7 +86,7 @@
 
 
 </body>
-<footer class="bg-dark  position-fixed bottom-0 start-0 w-100 text-light mt-5 "> 
+<footer class="bg-dark  position-fixed bottom-0 start-0 w-100 text-light mt-5 ms-0"> 
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
       © 2024 Copyright: Mohamed Ahmed
     </div>

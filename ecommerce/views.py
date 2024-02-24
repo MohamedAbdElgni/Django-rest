@@ -1,9 +1,13 @@
-from django.http import HttpResponse 
-from django.shortcuts import render
+
+from django.shortcuts import render,reverse,redirect
+from django.http import HttpResponseRedirect
 from products.models import Product
-from categories.models import Category
-from django.contrib.auth import logout
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout, get_user_model
+
+from .forms import SignupForm , LoginForm
+
+
+
 
 def Home(request):
     context = {
@@ -17,22 +21,44 @@ def about(request):
 
 
 def Login(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('Home'))
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return render(request, 'home.html')
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(reverse('Home'))
+            else:
+                print('Invalid Username or Password')
+    else:
+        form = LoginForm()
+    return render(request, 'registration/login.html', {'form': form})
+
+
+
+
+
+def Register(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('Home'))
+    
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('Login'))
+        
         else:
-            
-            return render(request, 'registration/login.html', {'error_message': 'Invalid username or password.'})
-    return render(request, 'registration/login.html')
+            for error in list(form.errors.values()):
+                print(request,error)
+    else:
+        form = SignupForm()
+    return render(request, 'registration/registration.html', {'form': form})
 
 def Logout(request):
     logout(request)
-    return render(request, 'home.html')
-
-def Register(request):
-    
-    return render(request, 'registration/registration.html')
+    return HttpResponseRedirect(reverse('Home'))
