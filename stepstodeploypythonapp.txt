@@ -1,0 +1,26 @@
+-Steps to Deploy django app on a Cpanel server
+
+1- Create a new python application in cpanel
+2- make sure to use the same python version that you used to develop the django app
+otherwise, you will face some issues with the app
+you can solve this issue by using a virtual environment
+3- install the required packages for the app
+4- upload the app files to the server
+5- update the static and media files
+
+steps to prepare the app for deployment
+1- update the settings.py file:
+- add the server's IP to the allowed hosts
+- set the debug mode to False
+- update the static and media files settings
+      a. add the following lines to the end of the settings.py file
+      STATIC_URL = '/static/' # make sure to use the same name of the static folder
+      STATIC_ROOT = os.path.join(BASE_DIR, 'static') # make sure to use the same name of the static folder
+      MEDIA_URL = '/media/' # make sure to use the same name of the media folder
+      MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # make sure to use the same name of the media folder
+2- update the urls.py file:
+- add the following lines to the end of the urls.py file
+      from django.conf import settings
+      from django.conf.urls.static import static
+      urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
