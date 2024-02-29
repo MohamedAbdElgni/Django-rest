@@ -11,4 +11,3 @@ class Product(models.Model):
     
     def get_img_url(self):
         return f'/media/{self.img}'
-    

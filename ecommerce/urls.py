@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
+from myapi.views import *
 from .views import *
 from categories.views import *
 from products.views import *
@@ -26,7 +28,8 @@ from products.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home, name='Home'),
-    
+    path('api-auth/', include('rest_framework.urls')),
+    path('prod-list-fun/', prouducts_list_fun, name='prod-list-fun'),
     path('about/', about, name='About'),
     # path('login/', Login, name='Login'),
     #path('register/', Register, name='Register'),
