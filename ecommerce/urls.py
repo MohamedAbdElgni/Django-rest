@@ -28,7 +28,7 @@ from products.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home, name='Home'),
-    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include('myapi.urls')),
     path('prod-list-fun/', prouducts_list_fun, name='prod-list-fun'),
     path('about/', about, name='About'),
     # path('login/', Login, name='Login'),
