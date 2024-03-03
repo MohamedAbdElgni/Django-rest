@@ -24,3 +24,10 @@ steps to prepare the app for deployment
       from django.conf.urls.static import static
       urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
       urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+لينك الريبو لاب 5 جانجو
+https://github.com/MohamedAbdElgni/lab5/blob/main/myapi/views.py
+
+محمد احمد محمد عبد الغنى
